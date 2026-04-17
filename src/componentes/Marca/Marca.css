@@ -1,20 +1,69 @@
+/* src/componentes/Marca/Marca.css */
 .marca {
-    text-align: center;
-    padding: 32px;
+  padding: 24px 28px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.marca h3 {
-    font-size: 32px;
-    border-bottom: 4px solid;
-    display: inline-block;
-    padding-bottom: 8px;
-
+.marca__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.marca .produtos {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 32px;
-    flex-wrap: wrap;
+.marca__titulo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
+.marca__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.marca__titulo h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.marca__badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+}
+
+.marca__excluir {
+  background: #fef2f2;
+  border: none;
+  border-radius: 8px;
+  color: #ef4444;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+
+.marca__excluir:hover {
+  background: #fee2e2;
+}
+
+.marca__lista {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .marca {
+    padding: 18px 16px;
+  }
 }
