@@ -1,0 +1,13 @@
+.marcas-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 24px;
+}
+
+@media (max-width: 768px) {
+  .marcas-grid {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+}
