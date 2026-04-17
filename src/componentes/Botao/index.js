@@ -1,11 +1,11 @@
 import './Botao.css'
 
-const Botao = (props) => {
-    return (
-        <button className="botao">
-            {props.texto}
-        </button>
-    )
+const Botao = ({ texto, type = 'submit', onClick }) => {
+  return (
+    <button className="botao" type={type} onClick={onClick}>
+      {texto}
+    </button>
+  )
 }
 
 export default Botao

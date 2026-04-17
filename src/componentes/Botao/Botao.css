@@ -1,15 +1,22 @@
 .botao {
-    background-color: lightskyblue;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 18px;
-    padding: 32px;
-    border: none;
-    cursor: pointer;
-    color: white;
-    margin: 32px 0;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 13px 24px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  width: 100%;
+  margin-top: 8px;
+  font-family: inherit;
+  transition: opacity 0.2s;
 }
 
 .botao:hover {
-    color: lightslategray;
+  opacity: 0.92;
+}
+
+.botao:active {
+  opacity: 0.85;
 }
