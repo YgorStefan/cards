@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+# CDP — Catálogo de Produtos
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Aplicação React para gerenciamento de produtos organizados por marcas, com persistência local no navegador.
 
-## Available Scripts
+## Funcionalidades
 
-In the project directory, you can run:
+- Cadastro, edição e exclusão de produtos
+- Cadastro e exclusão de marcas com cores personalizadas
+- Produtos agrupados por marca com contagem dinâmica
+- Persistência via `localStorage` (dados mantidos ao recarregar a página)
+- Estado vazio com chamada para ação quando não há produtos cadastrados
+- Drawer lateral para formulários de produto e marca
 
-### `npm start`
+## Tecnologias
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- [React 19](https://react.dev/)
+- [Create React App](https://create-react-app.dev/)
+- [Testing Library](https://testing-library.com/) + Jest
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Pré-requisitos
 
-### `npm test`
+- Node.js 18+
+- npm
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Instalação
 
-### `npm run build`
+```bash
+npm install
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Scripts disponíveis
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+| Comando | Descrição |
+|---|---|
+| `npm start` | Inicia o servidor de desenvolvimento em `localhost:3000` |
+| `npm test` | Executa os testes com Jest |
+| `npm run build` | Gera o build de produção na pasta `build/` |
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Estrutura do projeto
 
-### `npm run eject`
+```
+src/
+├── App.js                    # Componente raiz — estado global e lógica CRUD
+├── hooks/
+│   └── useLocalStorage.js    # Hook para persistência no localStorage
+└── componentes/
+    ├── Header/               # Cabeçalho com botões de ação
+    ├── Marca/                # Seção de marca com lista de produtos
+    ├── ProdutoItem/          # Card individual de produto
+    ├── Drawer/               # Painel lateral para formulários
+    ├── FormularioProduto/    # Formulário de criação/edição de produto
+    ├── FormularioMarca/      # Formulário de criação de marca com preview de cores
+    ├── EstadoVazio/          # Tela exibida quando não há produtos
+    ├── Botao/                # Componente de botão reutilizável
+    ├── CampoTexto/           # Input de texto reutilizável
+    └── ListaSuspensa/        # Select reutilizável
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Marcas padrão
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+O sistema inicia com 6 marcas pré-cadastradas: Jetmax, Kajima, KWS, Kawashima, Nakashi e Outros. Novas marcas podem ser adicionadas com cores primária e secundária personalizadas.
