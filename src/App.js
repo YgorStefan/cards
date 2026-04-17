@@ -5,6 +5,7 @@ import Header from './componentes/Header'
 import Marca from './componentes/Marca'
 import Drawer from './componentes/Drawer'
 import EstadoVazio from './componentes/EstadoVazio'
+import ModalConfirmacao from './componentes/ModalConfirmacao'
 
 const marcasIniciais = [
   { id: '1', nome: 'Jetmax', corPrimaria: '#D9F7E9', corSecundaria: '#57C278' },
@@ -19,6 +20,7 @@ function App() {
   const [produtos, setProdutos] = useLocalStorage('cdp_produtos', [])
   const [marcas, setMarcas] = useLocalStorage('cdp_marcas', marcasIniciais)
   const [drawer, setDrawer] = useState({ aberto: false, tipo: null, item: null })
+  const [modal, setModal] = useState({ aberto: false, mensagem: '', onConfirmar: null })
 
   const abrirDrawer = (tipo, item = null) =>
     setDrawer({ aberto: true, tipo, item })
@@ -35,9 +37,16 @@ function App() {
     fecharDrawer()
   }
 
-  const excluirProduto = (id) => {
-    setProdutos(prev => prev.filter(p => p.id !== id))
-  }
+  const fecharModal = () =>
+    setModal({ aberto: false, mensagem: '', onConfirmar: null })
+
+  const confirmarExclusao = (mensagem, acao) =>
+    setModal({ aberto: true, mensagem, onConfirmar: () => { acao(); fecharModal() } })
+
+  const excluirProduto = (id) =>
+    confirmarExclusao('Tem certeza que deseja excluir este produto?', () =>
+      setProdutos(prev => prev.filter(p => p.id !== id))
+    )
 
   const salvarMarca = (marca) => {
     setMarcas(prev =>
@@ -50,10 +59,14 @@ function App() {
 
   const excluirMarca = (id) => {
     const marca = marcas.find(m => m.id === id)
-    setMarcas(prev => prev.filter(m => m.id !== id))
-    if (marca) {
-      setProdutos(prev => prev.filter(p => p.marca !== marca.nome))
-    }
+    const temProdutos = produtos.some(p => p.marca === marca?.nome)
+    const mensagem = temProdutos
+      ? `Excluir a marca "${marca?.nome}" também removerá todos os produtos vinculados. Deseja continuar?`
+      : `Tem certeza que deseja excluir a marca "${marca?.nome}"?`
+    confirmarExclusao(mensagem, () => {
+      setMarcas(prev => prev.filter(m => m.id !== id))
+      if (marca) setProdutos(prev => prev.filter(p => p.marca !== marca.nome))
+    })
   }
 
   return (
@@ -91,6 +104,13 @@ function App() {
         onSalvarProduto={salvarProduto}
         onSalvarMarca={salvarMarca}
       />
+      {modal.aberto && (
+        <ModalConfirmacao
+          mensagem={modal.mensagem}
+          onConfirmar={modal.onConfirmar}
+          onCancelar={fecharModal}
+        />
+      )}
     </div>
   )
 }
