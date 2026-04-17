@@ -21,7 +21,7 @@ Aplicação React de catálogo de produtos agrupados por marca. O objetivo é co
 - **Criar:** formulário no drawer lateral com campos: nome, código, imagem (URL), marca, preço, descrição
 - **Ler:** listados por seção de marca em formato lista compacta
 - **Editar:** botão ✏️ no item abre o drawer preenchido com os dados do produto
-- **Excluir:** botão 🗑 no item remove o produto com confirmação inline
+- **Excluir:** botão 🗑 no item remove o produto imediatamente, sem diálogo de confirmação
 
 ### Marcas — CRUD completo
 - **Criar:** formulário no drawer com campos: nome, cor primária, cor secundária
@@ -131,7 +131,8 @@ App.js
 ### Seção de Marca
 - Fundo com `corPrimaria` da marca
 - Título com dot colorido (`corSecundaria`), badge de contagem e botão "Excluir marca"
-- Lista de produtos em card branco com `border-radius: 10px`
+- Seção sempre visível (mesmo sem produtos), para permitir exclusão da marca vazia
+- Lista de produtos em card branco com `border-radius: 10px` — omitida quando não há produtos
 
 ### ProdutoItem
 - Miniatura `32×32px` com `border-radius: 8px` e gradiente da `corSecundaria` da marca
