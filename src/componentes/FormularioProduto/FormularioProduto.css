@@ -1,0 +1,15 @@
+.formulario-produto {
+  padding: 20px 20px 28px;
+}
+
+.formulario-produto__linha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 480px) {
+  .formulario-produto__linha {
+    grid-template-columns: 1fr;
+  }
+}

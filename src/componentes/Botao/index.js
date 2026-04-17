@@ -1,3 +1,4 @@
+import React from 'react'
 import './Botao.css'
 
 const Botao = ({ texto, type = 'submit', onClick }) => {

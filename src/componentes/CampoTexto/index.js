@@ -1,3 +1,4 @@
+import React from 'react'
 import './CampoTexto.css'
 
 const CampoTexto = (props) => {
@@ -7,14 +8,16 @@ const CampoTexto = (props) => {
 
   return (
     <div className="campo-texto">
-      <label>{props.label}</label>
-      <input
-        type={props.type || 'text'}
-        value={props.valor}
-        onChange={aoDigitado}
-        required={props.required}
-        placeholder={props.placeholder}
-      />
+      <label>
+        {props.label}
+        <input
+          type={props.type || 'text'}
+          value={props.valor}
+          onChange={aoDigitado}
+          required={props.required}
+          placeholder={props.placeholder}
+        />
+      </label>
     </div>
   )
 }
