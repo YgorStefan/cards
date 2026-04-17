@@ -1,32 +1,53 @@
-/* src/componentes/EstadoVazio/EstadoVazio.css */
 .estado-vazio {
+  grid-column: 1 / -1;
+  background: white;
+  border: 1.5px dashed #e5e7eb;
+  border-radius: 16px;
+  padding: 48px 24px;
   text-align: center;
-  padding: 80px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
 
 .estado-vazio__icone {
-  font-size: 52px;
-  display: block;
-  margin-bottom: 12px;
+  font-size: 40px;
+  margin-bottom: 4px;
 }
 
-.estado-vazio__texto {
-  color: #9ca3af;
+.estado-vazio__titulo {
   font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.estado-vazio__subtitulo {
+  font-size: 14px;
+  color: #6b7280;
   margin: 0 0 8px;
 }
 
-.estado-vazio__link {
-  background: none;
+.estado-vazio__btn {
+  background: #6366f1;
   border: none;
-  color: #6366f1;
-  font-size: 15px;
-  font-weight: 600;
+  border-radius: 20px;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 20px;
   cursor: pointer;
-  padding: 0;
   font-family: inherit;
+  transition: opacity 0.2s;
 }
 
-.estado-vazio__link:hover {
-  text-decoration: underline;
+.estado-vazio__btn:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 480px) {
+  .estado-vazio {
+    padding: 36px 16px;
+  }
 }
