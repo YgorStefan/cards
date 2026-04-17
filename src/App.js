@@ -1,5 +1,5 @@
-// src/App.js
 import React, { useState } from 'react'
+import './App.css'
 import useLocalStorage from './hooks/useLocalStorage'
 import Header from './componentes/Header'
 import Marca from './componentes/Marca'
@@ -40,7 +40,11 @@ function App() {
   }
 
   const salvarMarca = (marca) => {
-    setMarcas(prev => [...prev, marca])
+    setMarcas(prev =>
+      prev.some(m => m.id === marca.id)
+        ? prev.map(m => m.id === marca.id ? marca : m)
+        : [...prev, marca]
+    )
     fecharDrawer()
   }
 
@@ -58,19 +62,26 @@ function App() {
         onAbrirDrawerProduto={() => abrirDrawer('produto')}
         onAbrirDrawerMarca={() => abrirDrawer('marca')}
       />
-      {produtos.length === 0 && (
-        <EstadoVazio onAdicionar={() => abrirDrawer('produto')} />
-      )}
-      {marcas.map(marca => (
-        <Marca
-          key={marca.id}
-          marca={marca}
-          produtos={produtos.filter(p => p.marca === marca.nome)}
-          onExcluirMarca={excluirMarca}
-          onEditarProduto={(produto) => abrirDrawer('produto', produto)}
-          onExcluirProduto={excluirProduto}
-        />
-      ))}
+      <div className="marcas-grid">
+        {produtos.length === 0 && (
+          <EstadoVazio onAdicionar={() => abrirDrawer('produto')} />
+        )}
+        {marcas
+          .slice()
+          .sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'))
+          .map(marca => (
+            <Marca
+              key={marca.id}
+              marca={marca}
+              produtos={produtos.filter(p => p.marca === marca.nome)}
+              onExcluirMarca={excluirMarca}
+              onEditarMarca={(m) => abrirDrawer('marca', m)}
+              onEditarProduto={(produto) => abrirDrawer('produto', produto)}
+              onExcluirProduto={excluirProduto}
+            />
+          ))
+        }
+      </div>
       <Drawer
         aberto={drawer.aberto}
         tipo={drawer.tipo}

@@ -44,15 +44,15 @@
   border: none;
   border-radius: 50%;
   color: white;
-  width: 30px;
-  height: 30px;
-  font-size: 20px;
-  cursor: pointer;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1;
+  cursor: pointer;
   transition: background 0.2s;
+  padding: 0;
+  flex-shrink: 0;
 }
 
 .drawer__fechar:hover {

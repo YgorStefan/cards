@@ -42,6 +42,13 @@ test('chama aoSalvar com dados corretos ao submeter', async () => {
   }))
 })
 
+test('aplica máscara ao digitar preço', async () => {
+  render(<FormularioProduto produto={null} marcas={marcas} aoSalvar={jest.fn()} />)
+  const campoPreco = screen.getByLabelText(/preço/i)
+  await userEvent.type(campoPreco, '1000')
+  expect(campoPreco).toHaveValue('10,00')
+})
+
 test('limpa campos após cadastro de novo produto', async () => {
   render(<FormularioProduto produto={null} marcas={marcas} aoSalvar={jest.fn()} />)
   const nomeInput = screen.getByLabelText(/nome/i)

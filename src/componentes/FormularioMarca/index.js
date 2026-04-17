@@ -1,24 +1,34 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './FormularioMarca.css'
 import CampoTexto from '../CampoTexto'
 import Botao from '../Botao'
 
-const FormularioMarca = ({ aoSalvar }) => {
+const FormularioMarca = ({ marca, aoSalvar }) => {
   const [nome, setNome] = useState('')
   const [corPrimaria, setCorPrimaria] = useState('#D9F7E9')
   const [corSecundaria, setCorSecundaria] = useState('#57C278')
 
+  useEffect(() => {
+    if (marca) {
+      setNome(marca.nome)
+      setCorPrimaria(marca.corPrimaria)
+      setCorSecundaria(marca.corSecundaria)
+    }
+  }, [marca])
+
   const aoSubmeter = (e) => {
     e.preventDefault()
     aoSalvar({
-      id: Date.now().toString(),
+      id: marca ? marca.id : Date.now().toString(),
       nome,
       corPrimaria,
       corSecundaria
     })
-    setNome('')
-    setCorPrimaria('#D9F7E9')
-    setCorSecundaria('#57C278')
+    if (!marca) {
+      setNome('')
+      setCorPrimaria('#D9F7E9')
+      setCorSecundaria('#57C278')
+    }
   }
 
   return (
@@ -64,7 +74,7 @@ const FormularioMarca = ({ aoSalvar }) => {
           {nome || 'Preview da Marca'}
         </span>
       </div>
-      <Botao texto="Criar Marca" />
+      <Botao texto={marca ? 'Salvar' : 'Criar Marca'} />
     </form>
   )
 }

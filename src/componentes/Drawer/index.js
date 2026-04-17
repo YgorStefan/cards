@@ -7,7 +7,7 @@ const Drawer = ({ aberto, tipo, item, marcas, onFechar, onSalvarProduto, onSalva
 
   const titulo = tipo === 'produto'
     ? (item ? 'Editar Produto' : 'Novo Produto')
-    : 'Nova Marca'
+    : (item ? 'Editar Marca' : 'Nova Marca')
 
   return (
     <div className="drawer-overlay" onClick={onFechar}>
@@ -20,7 +20,10 @@ const Drawer = ({ aberto, tipo, item, marcas, onFechar, onSalvarProduto, onSalva
             aria-label="Fechar painel"
             onClick={onFechar}
           >
-            ×
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              <line x1="1" y1="1" x2="13" y2="13"/>
+              <line x1="13" y1="1" x2="1" y2="13"/>
+            </svg>
           </button>
         </div>
         <div className="drawer__corpo">
@@ -31,7 +34,7 @@ const Drawer = ({ aberto, tipo, item, marcas, onFechar, onSalvarProduto, onSalva
               aoSalvar={onSalvarProduto}
             />
           ) : (
-            <FormularioMarca aoSalvar={onSalvarMarca} />
+            <FormularioMarca marca={item} aoSalvar={onSalvarMarca} />
           )}
         </div>
       </div>
