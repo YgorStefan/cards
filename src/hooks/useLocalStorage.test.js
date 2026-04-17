@@ -25,3 +25,15 @@ test('suporta arrays como valor', () => {
   act(() => result.current[1]([1, 2, 3]))
   expect(result.current[0]).toEqual([1, 2, 3])
 })
+
+test('retorna valorInicial quando localStorage contém JSON inválido', () => {
+  localStorage.setItem('chave', 'não-é-json{{{')
+  const { result } = renderHook(() => useLocalStorage('chave', 'fallback'))
+  expect(result.current[0]).toBe('fallback')
+})
+
+test('suporta atualização funcional via setter', () => {
+  const { result } = renderHook(() => useLocalStorage('lista', [1]))
+  act(() => result.current[1](prev => [...prev, 2]))
+  expect(result.current[0]).toEqual([1, 2])
+})
