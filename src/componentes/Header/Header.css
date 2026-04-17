@@ -1,6 +1,13 @@
-/* src/componentes/Header/Header.css */
+@keyframes headerCores {
+  0%   { background: linear-gradient(135deg, #1e3a5f, #3b1f6b); }
+  25%  { background: linear-gradient(135deg, #1a1a4e, #2d1b69); }
+  50%  { background: linear-gradient(135deg, #0f2b3d, #1f1152); }
+  75%  { background: linear-gradient(135deg, #1b2a4a, #2e1264); }
+  100% { background: linear-gradient(135deg, #1e3a5f, #3b1f6b); }
+}
+
 .header {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  animation: headerCores 14s ease-in-out infinite;
   padding: 14px 24px;
   display: flex;
   align-items: center;
@@ -24,9 +31,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
-  font-size: 16px;
   color: white;
+  flex-shrink: 0;
 }
 
 .header__logo-text {
@@ -50,6 +56,7 @@
   font-weight: 600;
   padding: 8px 16px;
   cursor: pointer;
+  font-family: inherit;
   transition: background 0.2s;
 }
 
@@ -61,11 +68,12 @@
   background: white;
   border: none;
   border-radius: 20px;
-  color: #6366f1;
+  color: #1e3a5f;
   font-size: 14px;
   font-weight: 700;
   padding: 8px 16px;
   cursor: pointer;
+  font-family: inherit;
   transition: opacity 0.2s;
 }
 
