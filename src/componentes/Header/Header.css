@@ -1,0 +1,90 @@
+/* src/componentes/Header/Header.css */
+.header {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header__logo-icon {
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 16px;
+  color: white;
+}
+
+.header__logo-text {
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.header__acoes {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
+
+.header__btn-marca {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.header__btn-marca:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.header__btn-produto {
+  background: white;
+  border: none;
+  border-radius: 20px;
+  color: #6366f1;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.header__btn-produto:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 12px 16px;
+  }
+
+  .header__logo-text {
+    font-size: 15px;
+  }
+
+  .header__btn-marca,
+  .header__btn-produto {
+    font-size: 12px;
+    padding: 7px 12px;
+  }
+}
