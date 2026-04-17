@@ -24,3 +24,6 @@ yarn-error.log*
 
 # Brainstorming session files
 .superpowers/
+
+# Docs internos
+docs/superpowers/
