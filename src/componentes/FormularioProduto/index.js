@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './FormularioProduto.css'
+import { formatarPreco } from '../../utils/preco'
 import CampoTexto from '../CampoTexto'
 import ListaSuspensa from '../ListaSuspensa'
 import Botao from '../Botao'
@@ -22,6 +23,10 @@ const FormularioProduto = ({ produto, marcas, aoSalvar }) => {
       setDescricao(produto.descricao)
     }
   }, [produto])
+
+  const aoAlterarPreco = (valor) => {
+    setPreco(formatarPreco(valor))
+  }
 
   const aoSubmeter = (e) => {
     e.preventDefault()
@@ -65,7 +70,7 @@ const FormularioProduto = ({ produto, marcas, aoSalvar }) => {
           label="Preço"
           placeholder="299,90"
           valor={preco}
-          aoAlterado={setPreco}
+          aoAlterado={aoAlterarPreco}
         />
         <ListaSuspensa
           label="Marca"
