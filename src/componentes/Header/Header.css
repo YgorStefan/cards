@@ -1,12 +1,20 @@
 @keyframes headerCores {
-  0%   { background: linear-gradient(135deg, #1e3a5f, #3b1f6b); }
-  25%  { background: linear-gradient(135deg, #1a1a4e, #2d1b69); }
-  50%  { background: linear-gradient(135deg, #0f2b3d, #1f1152); }
-  75%  { background: linear-gradient(135deg, #1b2a4a, #2e1264); }
-  100% { background: linear-gradient(135deg, #1e3a5f, #3b1f6b); }
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .header {
+  background: linear-gradient(135deg,
+    #1e3a5f,
+    #3b1f6b,
+    #0f2b3d,
+    #1f1152,
+    #1b2a4a,
+    #2e1264,
+    #1e3a5f
+  );
+  background-size: 400% 400%;
   animation: headerCores 14s ease-in-out infinite;
   padding: 14px 24px;
   display: flex;
@@ -79,6 +87,12 @@
 
 .header__btn-produto:hover {
   opacity: 0.9;
+}
+
+.header__btn-marca:focus-visible,
+.header__btn-produto:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
 }
 
 @media (max-width: 480px) {
