@@ -13,33 +13,49 @@ test('exibe botão "Cadastrar Produto" para produto novo', () => {
 })
 
 test('exibe botão "Salvar Alterações" ao editar', () => {
-  const produto = { id: '1', nome: 'Alpha', codigo: '#JX-001', imagem: '', marca: 'Jetmax', preco: '299', descricao: '' }
+  const produto = { id: '1', nome: 'Alpha', codigo: '#JX-001', imagem: '', marcaId: '1', preco: '299', descricao: '' }
   render(<FormularioProduto produto={produto} marcas={marcas} aoSalvar={jest.fn()} />)
   expect(screen.getByRole('button', { name: /salvar alterações/i })).toBeInTheDocument()
 })
 
 test('preenche campos com dados do produto ao editar', () => {
-  const produto = { id: '1', nome: 'Alpha', codigo: '#JX-001', imagem: '', marca: 'Jetmax', preco: '299', descricao: 'Top' }
+  const produto = { id: '1', nome: 'Alpha', codigo: '#JX-001', imagem: '', marcaId: '1', preco: '299', descricao: 'Top' }
   render(<FormularioProduto produto={produto} marcas={marcas} aoSalvar={jest.fn()} />)
   expect(screen.getByDisplayValue('Alpha')).toBeInTheDocument()
   expect(screen.getByDisplayValue('#JX-001')).toBeInTheDocument()
   expect(screen.getByDisplayValue('299')).toBeInTheDocument()
+  expect(screen.getByLabelText(/marca/i)).toHaveValue('Jetmax')
 })
 
-test('chama aoSalvar com dados corretos ao submeter', async () => {
+test('chama aoSalvar com marcaId correto ao submeter', async () => {
   const aoSalvar = jest.fn()
   render(<FormularioProduto produto={null} marcas={marcas} aoSalvar={aoSalvar} />)
 
   await userEvent.type(screen.getByLabelText(/nome/i), 'Novo Produto')
   await userEvent.type(screen.getByLabelText(/código/i), '#JX-001')
+  await userEvent.type(screen.getByLabelText(/preço/i), '100')
   await userEvent.selectOptions(screen.getByLabelText(/marca/i), 'Jetmax')
   await userEvent.click(screen.getByRole('button', { name: /cadastrar produto/i }))
 
   expect(aoSalvar).toHaveBeenCalledWith(expect.objectContaining({
     nome: 'Novo Produto',
     codigo: '#JX-001',
-    marca: 'Jetmax'
+    marcaId: '1'
   }))
+})
+
+test('não chama aoSalvar quando nome contém apenas espaços', async () => {
+  const aoSalvar = jest.fn()
+  render(<FormularioProduto produto={null} marcas={marcas} aoSalvar={aoSalvar} />)
+
+  await userEvent.type(screen.getByLabelText(/nome/i), '   ')
+  await userEvent.type(screen.getByLabelText(/código/i), '#JX-001')
+  await userEvent.type(screen.getByLabelText(/preço/i), '100')
+  await userEvent.selectOptions(screen.getByLabelText(/marca/i), 'Jetmax')
+  await userEvent.click(screen.getByRole('button', { name: /cadastrar produto/i }))
+
+  expect(aoSalvar).not.toHaveBeenCalled()
+  expect(screen.getByRole('alert')).toBeInTheDocument()
 })
 
 test('aplica máscara ao digitar preço', async () => {
@@ -54,6 +70,7 @@ test('limpa campos após cadastro de novo produto', async () => {
   const nomeInput = screen.getByLabelText(/nome/i)
   await userEvent.type(nomeInput, 'Produto X')
   await userEvent.type(screen.getByLabelText(/código/i), '#001')
+  await userEvent.type(screen.getByLabelText(/preço/i), '100')
   await userEvent.selectOptions(screen.getByLabelText(/marca/i), 'Jetmax')
   await userEvent.click(screen.getByRole('button', { name: /cadastrar produto/i }))
   expect(nomeInput).toHaveValue('')
