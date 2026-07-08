@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css'
 import useLocalStorage from './hooks/useLocalStorage'
 import Header from './componentes/Header'
@@ -21,6 +21,20 @@ function App() {
   const [marcas, setMarcas] = useLocalStorage('cdp_marcas', marcasIniciais)
   const [drawer, setDrawer] = useState({ aberto: false, tipo: null, item: null })
   const [modal, setModal] = useState({ aberto: false, mensagem: '', onConfirmar: null })
+  const [busca, setBusca] = useState('')
+
+  useEffect(() => {
+    const precisaMigrar = produtos.some(p => !p.marcaId)
+    if (!precisaMigrar) return
+    setProdutos(prev =>
+      prev.map(p => {
+        if (p.marcaId) return p
+        const marcaCorrespondente = marcas.find(m => m.nome === p.marca)
+        return marcaCorrespondente ? { ...p, marcaId: marcaCorrespondente.id } : p
+      })
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const abrirDrawer = (tipo, item = null) =>
     setDrawer({ aberto: true, tipo, item })
@@ -59,25 +73,39 @@ function App() {
 
   const excluirMarca = (id) => {
     const marca = marcas.find(m => m.id === id)
-    const temProdutos = produtos.some(p => p.marca === marca?.nome)
+    if (!marca) return
+    const temProdutos = produtos.some(p => p.marcaId === id)
     const mensagem = temProdutos
-      ? `Excluir a marca "${marca?.nome}" também removerá todos os produtos vinculados. Deseja continuar?`
-      : `Tem certeza que deseja excluir a marca "${marca?.nome}"?`
+      ? `Excluir a marca "${marca.nome}" também removerá todos os produtos vinculados. Deseja continuar?`
+      : `Tem certeza que deseja excluir a marca "${marca.nome}"?`
     confirmarExclusao(mensagem, () => {
       setMarcas(prev => prev.filter(m => m.id !== id))
-      if (marca) setProdutos(prev => prev.filter(p => p.marca !== marca.nome))
+      setProdutos(prev => prev.filter(p => p.marcaId !== id))
     })
   }
+
+  const buscaTratada = busca.trim().toLowerCase()
+  const produtosFiltrados = buscaTratada
+    ? produtos.filter(p => p.nome.toLowerCase().includes(buscaTratada))
+    : produtos
 
   return (
     <div className="App">
       <Header
+        busca={busca}
+        onBuscaChange={setBusca}
         onAbrirDrawerProduto={() => abrirDrawer('produto')}
         onAbrirDrawerMarca={() => abrirDrawer('marca')}
       />
       <div className="marcas-grid">
         {produtos.length === 0 && (
           <EstadoVazio onAdicionar={() => abrirDrawer('produto')} />
+        )}
+        {produtos.length > 0 && buscaTratada && produtosFiltrados.length === 0 && (
+          <EstadoVazio
+            titulo="Nenhum produto encontrado"
+            subtitulo={`Não encontramos produtos para "${busca.trim()}"`}
+          />
         )}
         {marcas
           .slice()
@@ -86,7 +114,9 @@ function App() {
             <Marca
               key={marca.id}
               marca={marca}
-              produtos={produtos.filter(p => p.marca === marca.nome)}
+              produtos={produtosFiltrados
+                .filter(p => p.marcaId === marca.id)
+                .sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'))}
               onExcluirMarca={excluirMarca}
               onEditarMarca={(m) => abrirDrawer('marca', m)}
               onEditarProduto={(produto) => abrirDrawer('produto', produto)}

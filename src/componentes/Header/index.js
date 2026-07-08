@@ -1,6 +1,7 @@
+import React from 'react'
 import './Header.css'
 
-const Header = ({ onAbrirDrawerProduto, onAbrirDrawerMarca }) => {
+const Header = ({ busca, onBuscaChange, onAbrirDrawerProduto, onAbrirDrawerMarca }) => {
   return (
     <header className="header">
       <div className="header__logo">
@@ -12,6 +13,16 @@ const Header = ({ onAbrirDrawerProduto, onAbrirDrawerMarca }) => {
           </svg>
         </div>
         <span className="header__logo-text">Catálogo</span>
+      </div>
+      <div className="header__busca">
+        <input
+          type="search"
+          className="header__busca-input"
+          placeholder="Buscar produto..."
+          aria-label="Buscar produto"
+          value={busca}
+          onChange={e => onBuscaChange(e.target.value)}
+        />
       </div>
       <div className="header__acoes">
         <button

@@ -3,6 +3,12 @@
   padding: 20px 20px 28px;
 }
 
+.formulario-marca__erro {
+  margin: -8px 0 12px;
+  color: #dc2626;
+  font-size: 13px;
+}
+
 .formulario-marca__cores {
   display: grid;
   grid-template-columns: 1fr 1fr;

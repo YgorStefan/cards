@@ -3,10 +3,11 @@ import './FormularioMarca.css'
 import CampoTexto from '../CampoTexto'
 import Botao from '../Botao'
 
-const FormularioMarca = ({ marca, aoSalvar }) => {
+const FormularioMarca = ({ marca, marcas = [], aoSalvar }) => {
   const [nome, setNome] = useState('')
   const [corPrimaria, setCorPrimaria] = useState('#D9F7E9')
   const [corSecundaria, setCorSecundaria] = useState('#57C278')
+  const [erro, setErro] = useState('')
 
   useEffect(() => {
     if (marca) {
@@ -16,11 +17,28 @@ const FormularioMarca = ({ marca, aoSalvar }) => {
     }
   }, [marca])
 
+  const aoAlterarNome = (valor) => {
+    setNome(valor)
+    if (erro) setErro('')
+  }
+
   const aoSubmeter = (e) => {
     e.preventDefault()
+    const nomeTratado = nome.trim()
+    if (!nomeTratado) {
+      setErro('Informe um nome válido para a marca.')
+      return
+    }
+    const jaExiste = marcas.some(
+      m => m.id !== marca?.id && m.nome.toLowerCase() === nomeTratado.toLowerCase()
+    )
+    if (jaExiste) {
+      setErro('Já existe uma marca com esse nome.')
+      return
+    }
     aoSalvar({
       id: marca ? marca.id : Date.now().toString(),
-      nome,
+      nome: nomeTratado,
       corPrimaria,
       corSecundaria
     })
@@ -38,8 +56,9 @@ const FormularioMarca = ({ marca, aoSalvar }) => {
         placeholder="Ex: Jetmax"
         required
         valor={nome}
-        aoAlterado={setNome}
+        aoAlterado={aoAlterarNome}
       />
+      {erro && <p className="formulario-marca__erro" role="alert">{erro}</p>}
       <div className="formulario-marca__cores">
         <div className="formulario-marca__cor">
           <label htmlFor="cor-primaria">Cor de fundo</label>

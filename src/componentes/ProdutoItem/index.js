@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './ProdutoItem.css'
 
 const ProdutoItem = ({ produto, corSecundaria, onEditar, onExcluir }) => {
+  const [imagemComErro, setImagemComErro] = useState(false)
+
   return (
     <div className="produto-item">
       <div
         className="produto-item__miniatura"
         style={{ background: `linear-gradient(135deg, ${corSecundaria}88, ${corSecundaria})` }}
       >
-        {produto.imagem && (
-          <img src={produto.imagem} alt={produto.nome} />
+        {produto.imagem && !imagemComErro && (
+          <img src={produto.imagem} alt={produto.nome} onError={() => setImagemComErro(true)} />
         )}
       </div>
       <div className="produto-item__info">

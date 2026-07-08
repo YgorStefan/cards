@@ -9,20 +9,37 @@ const FormularioProduto = ({ produto, marcas, aoSalvar }) => {
   const [nome, setNome] = useState('')
   const [codigo, setCodigo] = useState('')
   const [imagem, setImagem] = useState('')
-  const [marca, setMarca] = useState('')
+  const [marcaId, setMarcaId] = useState('')
   const [preco, setPreco] = useState('')
   const [descricao, setDescricao] = useState('')
+  const [erro, setErro] = useState('')
 
   useEffect(() => {
     if (produto) {
       setNome(produto.nome)
       setCodigo(produto.codigo)
       setImagem(produto.imagem)
-      setMarca(produto.marca)
+      setMarcaId(produto.marcaId || '')
       setPreco(produto.preco)
       setDescricao(produto.descricao)
     }
   }, [produto])
+
+  const aoAlterarNome = (valor) => {
+    setNome(valor)
+    if (erro) setErro('')
+  }
+
+  const aoAlterarCodigo = (valor) => {
+    setCodigo(valor)
+    if (erro) setErro('')
+  }
+
+  const nomeMarcaSelecionada = marcas.find(m => m.id === marcaId)?.nome || ''
+
+  const aoAlterarMarca = (nomeSelecionado) => {
+    setMarcaId(marcas.find(m => m.nome === nomeSelecionado)?.id || '')
+  }
 
   const aoAlterarPreco = (valor) => {
     setPreco(formatarPreco(valor))
@@ -30,12 +47,18 @@ const FormularioProduto = ({ produto, marcas, aoSalvar }) => {
 
   const aoSubmeter = (e) => {
     e.preventDefault()
+    const nomeTratado = nome.trim()
+    const codigoTratado = codigo.trim()
+    if (!nomeTratado || !codigoTratado) {
+      setErro('Preencha nome e código com um valor válido.')
+      return
+    }
     aoSalvar({
       id: produto?.id || Date.now().toString(),
-      nome,
-      codigo,
+      nome: nomeTratado,
+      codigo: codigoTratado,
       imagem,
-      marca,
+      marcaId,
       preco,
       descricao
     })
@@ -43,7 +66,7 @@ const FormularioProduto = ({ produto, marcas, aoSalvar }) => {
       setNome('')
       setCodigo('')
       setImagem('')
-      setMarca('')
+      setMarcaId('')
       setPreco('')
       setDescricao('')
     }
@@ -56,19 +79,21 @@ const FormularioProduto = ({ produto, marcas, aoSalvar }) => {
         placeholder="Nome do produto"
         required
         valor={nome}
-        aoAlterado={setNome}
+        aoAlterado={aoAlterarNome}
       />
       <CampoTexto
         label="Código"
         placeholder="#JX-001"
         required
         valor={codigo}
-        aoAlterado={setCodigo}
+        aoAlterado={aoAlterarCodigo}
       />
+      {erro && <p className="formulario-produto__erro" role="alert">{erro}</p>}
       <div className="formulario-produto__linha">
         <CampoTexto
           label="Preço"
           placeholder="299,90"
+          required
           valor={preco}
           aoAlterado={aoAlterarPreco}
         />
@@ -76,8 +101,8 @@ const FormularioProduto = ({ produto, marcas, aoSalvar }) => {
           label="Marca"
           required
           itens={marcas.map(m => m.nome)}
-          valor={marca}
-          aoAlterado={setMarca}
+          valor={nomeMarcaSelecionada}
+          aoAlterado={aoAlterarMarca}
         />
       </div>
       <CampoTexto
