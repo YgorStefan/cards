@@ -2,7 +2,6 @@ import React from 'react'
 import './ListaSuspensa.css'
 
 const ListaSuspensa = (props) => {
-    // console.log(props.itens)
     const id = `lista-${props.label?.toLowerCase().replace(/\s+/g, '-')}`
     return (
         <div className="lista-suspensa">
