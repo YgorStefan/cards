@@ -5,11 +5,13 @@ Aplicação React para gerenciamento de produtos organizados por marcas, com per
 ## Funcionalidades
 
 - Cadastro, edição e exclusão de produtos
-- Cadastro e exclusão de marcas com cores personalizadas
-- Produtos agrupados por marca com contagem dinâmica
+- Cadastro, edição e exclusão de marcas com cores personalizadas
+- Produtos agrupados por marca com contagem dinâmica, ordenados alfabeticamente
+- Busca de produtos por nome, com estado dedicado para "nenhum resultado encontrado"
 - Persistência via `localStorage` (dados mantidos ao recarregar a página)
 - Estado vazio com chamada para ação quando não há produtos cadastrados
-- Drawer lateral para formulários de produto e marca
+- Drawer lateral para formulários de produto e marca, com suporte a teclado (foco automático, `Tab` contido no painel e fechamento via `Esc`)
+- Validações de dados: nomes de marca duplicados são bloqueados e vínculo produto↔marca é feito por id (renomear uma marca não desassocia seus produtos)
 
 ## Tecnologias
 
@@ -42,15 +44,17 @@ npm install
 src/
 ├── App.js                    # Componente raiz — estado global e lógica CRUD
 ├── hooks/
-│   └── useLocalStorage.js    # Hook para persistência no localStorage
+│   ├── useLocalStorage.js    # Hook para persistência no localStorage
+│   └── useFocusTrap.js       # Hook de acessibilidade para Drawer e ModalConfirmacao
 └── componentes/
-    ├── Header/               # Cabeçalho com botões de ação
+    ├── Header/               # Cabeçalho com busca e botões de ação
     ├── Marca/                # Seção de marca com lista de produtos
     ├── ProdutoItem/          # Card individual de produto
-    ├── Drawer/               # Painel lateral para formulários
+    ├── Drawer/               # Painel lateral para formulários (com focus trap)
     ├── FormularioProduto/    # Formulário de criação/edição de produto
-    ├── FormularioMarca/      # Formulário de criação de marca com preview de cores
-    ├── EstadoVazio/          # Tela exibida quando não há produtos
+    ├── FormularioMarca/      # Formulário de criação/edição de marca com preview de cores
+    ├── EstadoVazio/          # Tela exibida quando não há produtos ou nenhum resultado de busca
+    ├── ModalConfirmacao/     # Modal de confirmação para ações destrutivas
     ├── Botao/                # Componente de botão reutilizável
     ├── CampoTexto/           # Input de texto reutilizável
     └── ListaSuspensa/        # Select reutilizável
