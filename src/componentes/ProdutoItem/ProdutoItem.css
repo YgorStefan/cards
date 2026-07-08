@@ -99,6 +99,12 @@
   background: #fee2e2;
 }
 
+.produto-item__btn-editar:focus-visible,
+.produto-item__btn-excluir:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
 @media (max-width: 480px) {
   .produto-item {
     padding: 10px 12px;

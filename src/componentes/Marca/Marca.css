@@ -82,6 +82,11 @@
   background: rgba(239, 68, 68, 0.1);
 }
 
+.marca__btn-icone:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
 .marca__lista {
   background: white;
   border-radius: 10px;

@@ -1,8 +1,12 @@
+import React from 'react'
 import './Drawer.css'
+import useFocusTrap from '../../hooks/useFocusTrap'
 import FormularioProduto from '../FormularioProduto'
 import FormularioMarca from '../FormularioMarca'
 
 const Drawer = ({ aberto, tipo, item, marcas, onFechar, onSalvarProduto, onSalvarMarca }) => {
+  const containerRef = useFocusTrap(aberto, onFechar)
+
   if (!aberto) return null
 
   const titulo = tipo === 'produto'
@@ -11,9 +15,16 @@ const Drawer = ({ aberto, tipo, item, marcas, onFechar, onSalvarProduto, onSalva
 
   return (
     <div className="drawer-overlay" onClick={onFechar}>
-      <div className="drawer" onClick={e => e.stopPropagation()}>
+      <div
+        className="drawer"
+        ref={containerRef}
+        onClick={e => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="drawer-titulo"
+      >
         <div className="drawer__header">
-          <h2 className="drawer__titulo">{titulo}</h2>
+          <h2 className="drawer__titulo" id="drawer-titulo">{titulo}</h2>
           <button
             className="drawer__fechar"
             type="button"
@@ -34,7 +45,7 @@ const Drawer = ({ aberto, tipo, item, marcas, onFechar, onSalvarProduto, onSalva
               aoSalvar={onSalvarProduto}
             />
           ) : (
-            <FormularioMarca marca={item} aoSalvar={onSalvarMarca} />
+            <FormularioMarca marca={item} marcas={marcas} aoSalvar={onSalvarMarca} />
           )}
         </div>
       </div>
