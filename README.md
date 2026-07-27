@@ -36,7 +36,18 @@ npm install
 |---|---|
 | `npm start` | Inicia o servidor de desenvolvimento em `localhost:3000` |
 | `npm test` | Executa os testes com Jest |
+| `npm run lint` | Roda o ESLint (config `react-app`) sobre `src/` |
 | `npm run build` | Gera o build de produção na pasta `build/` |
+
+O `npm run lint` passa por `cross-env NODE_ENV=development` porque o
+`babel-preset-react-app` recusa a rodar sem `NODE_ENV` ou `BABEL_ENV` definido —
+sem isso o ESLint falha no parse de todo arquivo, e não por causa do código.
+
+As regras `testing-library/no-node-access` e `no-container` estão como **aviso**
+(não erro) nos `*.test.js` desde 26/07/2026: os 5 casos existentes acessam o DOM
+de propósito — testar restauração de foco e o clique no overlay do modal, que
+não tem `role` para consultar. Ficam visíveis, sem travar o comando. Erro novo
+continua reprovando.
 
 ## Estrutura do projeto
 

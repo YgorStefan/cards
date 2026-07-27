@@ -16,6 +16,7 @@
     "@babel/core": "^7.27.4",
     "babel-jest": "^27.5.1",
     "babel-preset-react-app": "^10.1.0",
+    "cross-env": "^10.1.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
     "jest-environment-jsdom": "^27.5.1"
@@ -24,12 +25,24 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
+    "lint": "cross-env NODE_ENV=development eslint src --ext .js,.jsx",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.test.js"
+        ],
+        "rules": {
+          "testing-library/no-node-access": "warn",
+          "testing-library/no-container": "warn"
+        }
+      }
     ]
   },
   "browserslist": {
